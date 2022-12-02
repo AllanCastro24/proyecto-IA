@@ -12,6 +12,10 @@ while(1):
 
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
+    # Identificar frutas
+    apple_upper = np.array([78,2,0],np.uint8)
+    apple_lower = np.array([255,27,20],np.uint8)
+    
     # Color rojo
 
     red_lower = np.array([136,87,111],np.uint8)
@@ -43,10 +47,15 @@ while(1):
     yellow = cv2.inRange(hsv, yellow_lower, yellow_upper)
     white = cv2.inRange(hsv, white_lower, white_upper)
     black = cv2.inRange(hsv, black_lower, black_upper)
+    # Frutas
+    apple = cv2.inRange(hsv, apple_lower, apple_upper)
 
 
     kernal = np.ones((5, 5), "uint8")
 
+    apple = cv2.dilate(apple, kernal)
+    res_apple = cv2.bitwise_and(img, img, mask = apple)
+    
     red = cv2.dilate(red, kernal)
     res_red = cv2.bitwise_and(img, img, mask = red)
 
@@ -62,6 +71,15 @@ while(1):
     black = cv2.dilate(black, kernal)
     res_black = cv2.bitwise_and(img, img, mask = black)
 
+    # Tracking apple
+    contours, hierarchy = cv2.findContours(apple, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    for pic, contour in enumerate(contours):
+        area = cv2.contourArea(contour)
+        if(area > 300):
+            x, y, w, h = cv2.boundingRect(contour)
+            img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            cv2.putText(img, "MANZANA: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255))    
+
     # Tracking red
     contours, hierarchy = cv2.findContours(red, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for pic, contour in enumerate(contours):
@@ -69,7 +87,7 @@ while(1):
         if(area > 300):
             x, y, w, h = cv2.boundingRect(contour)
             img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
-            cv2.putText(img, "ROJO: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255))    
+            cv2.putText(img, "MANZANA: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255))    
 
     # Tracking blue
     contours, hierarchy = cv2.findContours(blue, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -80,7 +98,6 @@ while(1):
             img = cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
             cv2.putText(img, "AZUL: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0))
             
-
     # Tracking yellow
     contours, hierarchy = cv2.findContours(yellow, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for pic, contour in enumerate(contours):
@@ -88,7 +105,7 @@ while(1):
         if(area > 300):
             x, y, w, h = cv2.boundingRect(contour)
             img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)
-            cv2.putText(img, "AMARILLO: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
+            cv2.putText(img, "PLATANO: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
 
     # Tracking white
     contours, hierarchy = cv2.findContours(white, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
