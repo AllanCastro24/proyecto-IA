@@ -1,7 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flaskext.mysql import MySQL
 
 app = Flask(__name__)
+mysql = MySQL()
 
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
+app.config['MYSQL_DATABASE_DB'] = 'canasta_db'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+
+mysql.init_app(app)
 #LOGIN
 @app.route('/', methods=['GET','POST'])
 def index():
@@ -30,9 +38,16 @@ def registro():
    return render_template('registro.html',error=error) 
 
 #HOME
-@app.route('/home')
+@app.route('/home', methods=['GET','POST'])
 def home():
-   return render_template('dashboard.html')
+   datos = []
+   if request.method == 'GET':
+      conn = mysql.connect()
+      cursor = conn.cursor()
+      cursor.execute('SELECT ventas.total,resumen_compra.fecha_y_hora, ventas.folio_resumen FROM ventas INNER JOIN resumen_compra ON ventas.c_resumen_compra = resumen_compra.clave')
+      datos = cursor.fetchall()
+
+   return render_template('dashboard.html', datos=datos)
 
 #CARRITO
 @app.route('/carrito')
