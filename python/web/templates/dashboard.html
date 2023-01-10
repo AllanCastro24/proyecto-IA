@@ -46,7 +46,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/carrito">
+                            <a class="nav-link" aria-current="page" href="/carrito/0">
                                 <span data-feather="shopping-cart"></span>
                                 Carrito de compras
                             </a>
@@ -76,7 +76,7 @@
     				<h2>Compras</h2>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary"><a style="color:black;" class="nav-link" href="/home">Agregar carrito</a></button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary"><a style="color:black;" class="nav-link" href="/carrito/0">Agregar carrito</a></button>
                         </div>
                     </div>
                 </div>
@@ -89,11 +89,11 @@
                             <div class="card-body">
                                 <div class="mr-5">
                                     <span id="message-count">Folio de compra #: {{dato.2}}</span><br>
-                                    <span id="message-count">Total: {{dato.0}}</span><br>
+                                    <span id="message-count">Total: {{dato.0}} Producto: {{dato.3}}</span><br>
                                     <span id="message-count">Fecha de compra: {{dato.1}}</span>
                                 </div>
                             </div>
-                            <a class="card-footer text-white clearfix small z-1" href="#">
+                            <a class="card-footer text-white clearfix small z-1" href="/carrito/{{dato.2}}">
                                 <span class="float-left">Mirar detalles</span>
                                 <span class="float-right">
                                 <i class="fa fa-angle-right"></i>
