@@ -3,7 +3,7 @@ import numpy as np
 
 # Capturar video desde la webcam (El parametro es la camara del equipo, puede variar)
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 while(1):
     _, img = cap.read()
@@ -90,13 +90,13 @@ while(1):
             cv2.putText(img, "MANZANA: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255))    
 
     # Tracking blue
-    contours, hierarchy = cv2.findContours(blue, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    for pic, contour in enumerate(contours):
-        area = cv2.contourArea(contour)
-        if(area > 300):
-            x, y, w, h = cv2.boundingRect(contour)
-            img = cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-            cv2.putText(img, "AZUL: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0))
+    # contours, hierarchy = cv2.findContours(blue, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    # for pic, contour in enumerate(contours):
+    #     area = cv2.contourArea(contour)
+    #     if(area > 300):
+    #         x, y, w, h = cv2.boundingRect(contour)
+    #         img = cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+    #         cv2.putText(img, "AZUL: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0))
             
     # Tracking yellow
     contours, hierarchy = cv2.findContours(yellow, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
@@ -108,22 +108,22 @@ while(1):
             cv2.putText(img, "PLATANO: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
 
     # Tracking white
-    contours, hierarchy = cv2.findContours(white, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    for pic, contour in enumerate(contours):
-        area = cv2.contourArea(contour)
-        if(area > 300):
-            x, y, w, h = cv2.boundingRect(contour)
-            img = cv2.rectangle(img, (x, y), (x + w, y + h), (255, 255, 255), 2)
-            cv2.putText(img, "BLANCO: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255))
+    # contours, hierarchy = cv2.findContours(white, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    # for pic, contour in enumerate(contours):
+    #     area = cv2.contourArea(contour)
+    #     if(area > 300):
+    #         x, y, w, h = cv2.boundingRect(contour)
+    #         img = cv2.rectangle(img, (x, y), (x + w, y + h), (255, 255, 255), 2)
+    #         cv2.putText(img, "BLANCO: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255))
 
     # Tracking black
-    contours, hierarchy = cv2.findContours(black, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    for pic, contour in enumerate(contours):
-        area = cv2.contourArea(contour)
-        if(area > 300):
-            x, y, w, h = cv2.boundingRect(contour)
-            img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 0), 2)
-            cv2.putText(img, "NEGRO: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0))
+    # contours, hierarchy = cv2.findContours(black, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    # for pic, contour in enumerate(contours):
+    #     area = cv2.contourArea(contour)
+    #     if(area > 300):
+    #         x, y, w, h = cv2.boundingRect(contour)
+    #         img = cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 0), 2)
+    #         cv2.putText(img, "NEGRO: ", (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 0))
 
     cv2.imshow("Seguimiento de color", img)
     if cv2.waitKey(10) & 0xFF == ord('q'):
