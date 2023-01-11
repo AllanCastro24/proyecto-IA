@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flaskext.mysql import MySQL
 from datetime import datetime
+# from pyswip import Prolog # Conexión con prolog
 
+# prolog = Prolog() #Crear objeto prolog
 app = Flask(__name__)
 mysql = MySQL()
 
@@ -86,3 +88,19 @@ def carrito(id):
 if __name__ == '__main__':
    app.debug = True
    app.run(host="0.0.0.0",port=5000)
+
+# class Prolog():
+#    def _init_(self, consulta):
+#       self.prolog = Prolog()
+#       self.prolog.consult(os.path.join("/","hechos.pl"))
+#       self.prolog = consulta
+#       self.resultado = []
+
+#    def esFruta(self):
+#       return self.prolog.query("esFruta(" + self.consulta + ")")
+
+#    def esColor(self):
+#       return self.prolog.query("esColor(x," + self.consulta + ")")
+   
+#    def pesaEntre(self):
+#       return self.prolog.query("pesaEntre(x," + self.min +", " + self.max+")")
